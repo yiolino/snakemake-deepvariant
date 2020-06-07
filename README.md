@@ -37,6 +37,7 @@ $ picard CreateSequenceDictionary R={your ref}.fa O={your ref}.dict
 
 #### Step6: run sankemake workflow
 ```
+cd working/
 snakemake -j {#CORE} --use-conda all
 ```
 
