@@ -1,0 +1,9 @@
+working/data/output
+working/data/ref/*
+!working/data/ref/.gitkeep
+working/data/reads/*
+!working/data/reads/.gitkeep
+working/logs
+working/.snakemake
+working/scripts/__pycache__
+.DS_Store

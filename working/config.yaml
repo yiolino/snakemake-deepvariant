@@ -1,0 +1,51 @@
+samples: samples.tsv
+units: units.tsv
+
+ref:
+  name: R64-1-1.75
+  # Path to the reference genome, ideally as it is provided by the GATK bundle.
+  genome: data/ref/E.coli_K12_MG1655.fa
+  # Path to any database of known variants, ideally as it is provided by the GATK bundle.
+  # known-variants: data/ref/dbsnp.vcf.gz
+
+processing:
+  remove-duplicates: true
+  trimming: "fastp"
+  # Uncomment and point to a bed file with, e.g., captured regions if necessary,
+  # see https://gatkforums.broadinstitute.org/gatk/discussion/4133/when-should-i-use-l-to-pass-in-a-list-of-intervals.
+  # restrict-regions: captured_regions.bed
+  # If regions are restricted, uncomment this to enlarge them by the given value in order to include
+  # flanking areas.
+  # region-padding: 100
+
+params:
+  bwa:
+    mem: 
+      - "-K 100000000"   # 隠れオプション defaultはthreads*10M 再現性のためにはKオプションが必要
+      - "-Y"   # Use soft clipping CIGAR operation for supplementary alignments.デフォルトはprimary alignmentsにsoft clipping, supplementary alignmentsにhard clipping
+  picard:
+    MarkDuplicates: "REMOVE_DUPLICATES=true"
+  trimmomatic:
+    pe:
+      trimmer:
+        # See trimmomatic manual for adding additional options, e.g. for adapter trimming.
+        - "LEADING:3"
+        - "TRAILING:3"
+        - "SLIDINGWINDOW:4:15"
+        - "MINLEN:36"
+    se:
+      trimmer:
+        # See trimmomatic manual for adding additional options, e.g. for adapter trimming.
+        - "LEADING:3"
+        - "TRAILING:3"
+        - "SLIDINGWINDOW:4:15"
+        - "MINLEN:36"
+  fastp: 
+    - "-q 20"
+    - "-n 10"
+    - "-u 20"
+    - "-3"
+    - "-w 1"
+  deepvariant:
+    model: "wgs"
+    extra: ""

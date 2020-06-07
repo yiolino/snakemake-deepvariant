@@ -1,0 +1,17 @@
+include: "rules/common.smk"
+
+##### Target rules #####
+
+rule all:
+    input:
+        "data/output/qc/multiqc.html",
+        expand("data/output/deepvariant/{sample}.vcf",
+            sample=samples.index)
+
+
+
+##### Modules #####
+
+include: "rules/mapping.smk"
+include: "rules/calling.smk"
+include: "rules/qc.smk"

@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  snakemake:
+    build: .
+    container_name: deepvariant
+    volumes:
+      - ${PWD}/working:/root/working
+    working_dir: /root/working
+    tty: true
+    command: /bin/bash

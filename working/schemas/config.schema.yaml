@@ -1,0 +1,74 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+
+description: snakemake configuration file
+
+type: object
+
+properties:
+  samples:
+    type: string
+  units:
+    type: string
+
+  ref:
+    type: object
+    properties:
+      genome:
+        type: string
+    required:
+      - genome
+
+  processing:
+    type: object
+    properties:
+      remove-duplicates:
+        type: boolean
+      restrict-regions:
+        type: string
+      region-padding:
+        type: integer
+      trimming:
+        type: string
+    required:
+      - remove-duplicates
+      - trimming
+
+  params:
+    type: object
+    properties:
+      bwa:
+        type: object
+        processing:
+          mem:
+            type: array
+        required:
+          - mem
+      picard:
+        type: object
+        properties:
+          MarkDuplicates:
+            type: string
+        required:
+          - MarkDuplicates
+      trimmomatic:
+        type: object
+        properties:
+          pe:
+            type: object
+          se:
+            type: object
+      fastp:
+        type: array
+      deepvariant:
+        type: object
+    required:
+      - bwa
+      - picard 
+      - deepvariant
+
+required:
+  - samples
+  - units
+  - ref
+  - processing
+  - params
