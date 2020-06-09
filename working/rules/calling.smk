@@ -16,5 +16,16 @@ rule call_variants:
         "../scripts/deepvariant.py"
 
 
-rule merge_vcf:
+rule merge_vcfs:
     input:
+        vcfs=lambda w: expand("data/output/deepvariant/{sample}.vcf.gz", sample=samples.index),
+    output:
+        "data/output/called/merged.vcf.gz"
+    log:
+        "logs/bcftools/mergevcfs.log"
+    params:
+        extra=""
+    conda:
+        "../envs/bcftools.yaml"
+    script:
+        "../scripts/bcftools_mergevcfs.py"

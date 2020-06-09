@@ -1,0 +1,6 @@
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - bcftools=1.10.2
+  - pigz=2.3.4
