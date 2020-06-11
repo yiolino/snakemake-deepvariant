@@ -29,13 +29,7 @@ rule multiqc:
             "data/output/qc/samtools-stats/{sample}.txt",
             "data/output/qc/fastp/{sample}_fastp.json",
             "data/output/qc/dedup/{sample}.metrics.txt"],
-            sample=list(samples.index)),
-            # "qc/fastqc/{u.sample}-{u.unit}.zip",
-            # "qc/samtools-stats/{u.sample}-{u.unit}.txt",
-            # "qc/fastp/{u.sample}-{u.unit}.json",
-            # "qc/dedup/{u.sample}-{u.unit}.metrics.txt"],
-            # u=units.itertuples()),   # units: pd.DataFrameオブジェクト
-        # "data/output/snpeff/all.csv"
+            sample=list(samples.index))
     output:
         report("data/output/qc/multiqc.html", caption="../report/multiqc.rst", category="Quality control")
     log:

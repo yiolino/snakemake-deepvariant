@@ -20,7 +20,7 @@ rule merge_vcfs:
     input:
         vcfs=lambda w: expand("data/output/deepvariant/{sample}.vcf.gz", sample=samples.index),
     output:
-        "data/output/called/merged.vcf.gz"
+        report("data/output/called/merged.vcf.gz", caption="../report/merged_vcfs.rst", category="Called SVs")
     log:
         "logs/bcftools/mergevcfs.log"
     params:

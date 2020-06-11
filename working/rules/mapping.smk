@@ -1,3 +1,7 @@
+rule get_index:
+    input:
+
+
 if config["processing"]["trimming"]=="trimmomatic":
     rule trim_reads_se:
         input:
@@ -6,7 +10,7 @@ if config["processing"]["trimming"]=="trimmomatic":
             temp("data/output/trimmed/{sample}.fq.gz")
         params:
             extra="",
-            **config["params"]["trimmomatic"]["se"]   # config.yamlよりimportしている
+            **config["params"]["trimmomatic"]["se"]
         log:
             "logs/trimmomatic/{sample}.log"
         wrapper:
@@ -29,6 +33,7 @@ if config["processing"]["trimming"]=="trimmomatic":
         wrapper:
             "0.50.4/bio/trimmomatic/pe"
 
+
 if config["processing"]["trimming"]=="fastp":
     rule fastp_pe: 
         input: 
@@ -40,10 +45,11 @@ if config["processing"]["trimming"]=="fastp":
         log:
             "logs/fastp/{sample}.log"
         params:
-            extra=" ".join([*config["params"]["fastp"]])   # config.yamlよりimportしている
+            extra=" ".join([*config["params"]["fastp"]])
         threads: 2
         wrapper:
             "0.50.4/bio/fastp"
+
 
 rule map_reads:
     input:
@@ -61,6 +67,7 @@ rule map_reads:
     threads: 2
     wrapper:
         "0.50.4/bio/bwa/mem"
+
 
 rule mark_duplicates:
     input:
