@@ -28,20 +28,27 @@ SRR1770413
 SRR341549
 ```
 
-#### Step5: create fasta index and dict
+#### Step 5: create fasta index and dict
 ```
 $ cd data/ref/
 $ samtools faidx {your ref}.fa
 $ picard CreateSequenceDictionary R={your ref}.fa O={your ref}.dict
 ```
 
-#### Step6: run sankemake workflow
+#### Step 6: run & enter docker container
+```
+$ cd snakmake-deepvariant/
+$ docker-compose up&
+$ docker exec -it deepvariant /bin/bash
+```
+
+#### Step 7: run sankemake workflow
 ```
 cd working/
 snakemake -j {#CORE} --use-conda all
 ```
 
-#### Step7: make a report html
+#### Step 8: make a report html
 Once the workflow has been successfully completed, you can output a report file.
 ```
 snakemake --report
