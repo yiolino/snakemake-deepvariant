@@ -47,8 +47,6 @@ Once the workflow has been successfully completed, you can output a report file.
 snakemake --report
 ```
 
-output report file will be like [this](https://htmlpreview.github.com/?https://github.com/tetsuro90/snakemake-deepvariant/blob/master/working/report.html)
-
 # License
 MIT License
 
