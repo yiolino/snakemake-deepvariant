@@ -41,6 +41,12 @@ cd working/
 snakemake -j {#CORE} --use-conda all
 ```
 
+#### Step7: make a report html
+Once the workflow has been successfully completed, You can output a report file.
+```
+snakemake --report
+```
+
 # License
 MIT License
 
