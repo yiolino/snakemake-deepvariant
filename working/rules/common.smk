@@ -17,7 +17,6 @@ validate(samples, schema="../schemas/samples.schema.yaml")
 units = pd.read_table(config["units"], dtype=str).set_index(["sample"], drop=False)
 validate(units, schema="../schemas/units.schema.yaml")
 
-
 ##### Wildcard constraints #####
 # wildcard_constraints: でglobalに定義。
 # '|' は正規表現をORで繋ぐ表現方法
@@ -26,11 +25,11 @@ wildcard_constraints:
     vartype="snvs|indels",
     sample="|".join(samples.index)
 
+
 ##### Helper functions #####
 
 def get_fai():
     return config["ref"]["genome"] + ".fai"
-
 
 # contigs in reference genome
 def get_contigs():
