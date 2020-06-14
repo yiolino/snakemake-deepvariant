@@ -3,7 +3,8 @@ rule call_variants:
         unpack(get_sample_bams_bamindex),
         ref=config["ref"]["genome"]
     output:
-        vcf="data/output/deepvariant/{sample}.vcf.gz"
+        vcf="data/output/deepvariant/{sample}.vcf.gz",
+        gvcf="data/output/deepvariant/{sample}.gvcf.gz",
     params:
         model=config["params"]["deepvariant"]["model"],
         extra=config["params"]["deepvariant"]["extra"]
@@ -29,21 +30,3 @@ rule merge_vcfs:
         "../envs/bcftools.yaml"
     script:
         "../scripts/bcftools_mergevcfs.py"
-
-
-rule call_variants_gvcf:
-    input:
-        unpack(get_sample_bams_bamindex),
-        ref=config["ref"]["genome"]
-    output:
-        vcf="data/output/deepvariant/gvcf/{sample}.gvcf.gz"
-    params:
-        model=config["params"]["deepvariant"]["model"],
-        extra=config["params"]["deepvariant"]["extra"]
-    threads: 2
-    log:
-        "logs/deepvariant/gvcf/{sample}/stdout.log"
-    conda:
-        "../envs/deepvariant.yaml"
-    script:
-        "../scripts/deepvariant_gvcf.py"
