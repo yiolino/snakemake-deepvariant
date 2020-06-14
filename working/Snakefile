@@ -5,7 +5,9 @@ include: "rules/common.smk"
 rule all:
     input:
         "data/output/qc/multiqc.html",
-        "data/output/called/merged.vcf.gz"
+        "data/output/called/merged.vcf.gz",
+        # expand("data/output/deepvariant/gvcf/{sample}.gvcf.gz",
+        #     sample = samples.index)
 
 ##### Modules #####
 include: "rules/mapping.smk"
