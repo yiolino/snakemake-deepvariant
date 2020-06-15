@@ -5,12 +5,14 @@ __license__ = "MIT"
 
 import os
 from snakemake.shell import shell
+from pathlib import Path
 
 log = snakemake.log_fmt_shell(stdout=True, stderr=True)
 extra = snakemake.params.get("extra", "")
 
+
 log_dir = os.path.dirname(str(snakemake.log))
-output_dir = os.path.dirname(str(snakemake.output[0]))
+output_dir = os.path.dirname(snakemake.output[0])
 
 # sample basename
 basename = os.path.splitext(os.path.basename(str(snakemake.input.bam)))[0]
