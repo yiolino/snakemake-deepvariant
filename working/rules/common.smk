@@ -31,11 +31,13 @@ wildcard_constraints:
 def get_fai():
     return config["ref"]["genome"] + ".fai"
 
+
 # contigs in reference genome
 def get_contigs():
     # squeeze=Trueで読み込んだデータが1列だけのデータだった場合、DataFrameではなく、Seriesを返す。
     return pd.read_table(get_fai(),
                          header=None, usecols=[0], squeeze=True, dtype=str)
+
 
 def get_fastq(wildcards):
     """
@@ -87,6 +89,7 @@ def get_sample_bams(wildcards):
                   "data/output/dedup/{sample}.bam",
                   sample=wildcards.sample)
 
+
 def get_sample_bams_bamindex(wildcards):
     # rule call_variantsにおいてunpack
     # baiもrule call_variantsの入力に入れておかなければrule samtools indexが呼び出されない。
@@ -98,6 +101,7 @@ def get_sample_bams_bamindex(wildcards):
                   "data/output/dedup/{sample}.bam.bai",
                   sample=wildcards.sample)
                   }
+
 
 def get_recal_input(bai=False):
     # case 1: no duplicate removal
