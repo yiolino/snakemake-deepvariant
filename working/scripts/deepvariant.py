@@ -5,35 +5,40 @@ __license__ = "MIT"
 
 import os
 from snakemake.shell import shell
+import tempfile
 
 log = snakemake.log_fmt_shell(stdout=True, stderr=True)
 extra = snakemake.params.get("extra", "")
 
-log_dir = os.path.dirname(str(snakemake.log))
-output_dir = os.path.dirname(str(snakemake.output))
+log_dir = os.path.dirname(snakemake.log[0])
+output_dir = os.path.dirname(snakemake.output[0])
 
 # sample basename
-basename = os.path.splitext(os.path.basename(str(snakemake.input.bam)))[0]
+basename = os.path.splitext(os.path.basename(snakemake.input.bam[0]))[0]
+
+split_inputs = " ".join(str(x) for x in range(0, int(snakemake.threads)))
 
 
-shell(
-    "(mkdir -p {output_dir}/{basename} \n"
-    "dv_make_examples.py "
-    "--cores {snakemake.threads} "
-    "--ref {snakemake.input.ref} "
-    "--reads {snakemake.input.bam} "
-    "--sample {basename} "
-    "--examples {output_dir}/{basename} "
-    "--logdir {log_dir} \n"
-    "dv_call_variants.py "
-    "--cores {snakemake.threads} "
-    "--outfile {output_dir}/{basename}/{basename}.tmp "
-    "--sample {basename} "
-    "--examples {output_dir}/{basename} "
-    "--model {snakemake.params.model} \n"
-    "dv_postprocess_variants.py "
-    "--ref {snakemake.input.ref} "
-    "--infile {output_dir}/{basename}/{basename}.tmp "
-    "--outfile {snakemake.output.vcf} \n"
-    "rm -rf {output_dir}/{basename} ) {log}"
-)
+with tempfile.TemporaryDirectory() as tmp_dir:
+    shell(
+        "(BIN_DIR=$(ls -d $CONDA_DEFAULT_ENV/share/deepvariant*/binaries/Deepvariant/*/DeepVariant*) \n"
+        "parallel --eta --halt 2 --joblog {log_dir}/log --res {log_dir} "
+        "python $BIN_DIR/make_examples.zip "
+        "--mode calling --ref {snakemake.input.ref} --reads {snakemake.input.bam} "
+        "--examples {tmp_dir}/{basename}.tfrecord@{snakemake.threads}.gz "
+        "--gvcf {tmp_dir}/{basename}.gvcf.tfrecord@{snakemake.threads}.gz "
+        "--task {{}} "
+        "::: {split_inputs} \n"
+        "dv_call_variants.py "
+        "--cores {snakemake.threads} "
+        "--outfile {tmp_dir}/{basename}.tmp "
+        "--sample {basename} "
+        "--examples {tmp_dir} "
+        "--model {snakemake.params.model} \n"
+        "python $BIN_DIR/postprocess_variants.zip "
+        "--ref {snakemake.input.ref} "
+        "--infile {tmp_dir}/{basename}.tmp "
+        "--outfile {snakemake.output.vcf} "
+        "--nonvariant_site_tfrecord_path {tmp_dir}/{basename}.gvcf.tfrecord@{snakemake.threads}.gz "
+        "--gvcf_outfile {snakemake.output.gvcf} ) {log}"
+    )

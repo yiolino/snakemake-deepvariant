@@ -3,7 +3,8 @@ rule call_variants:
         unpack(get_sample_bams_bamindex),
         ref=config["ref"]["genome"]
     output:
-        vcf="data/output/deepvariant/{sample}.vcf.gz"
+        vcf="data/output/deepvariant/{sample}.vcf.gz",
+        gvcf="data/output/deepvariant/{sample}.gvcf.gz",
     params:
         model=config["params"]["deepvariant"]["model"],
         extra=config["params"]["deepvariant"]["extra"]
