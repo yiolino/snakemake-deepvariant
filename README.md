@@ -37,14 +37,14 @@ $ docker exec -it deepvariant /bin/bash
 
 #### Step 6: run sankemake workflow
 ```
-cd working/
-snakemake -j {#CORE} --use-conda all
+$ cd working/
+$ snakemake -j {#CORE} --use-conda all
 ```
 
 #### Step 7: make a report html
 Once the workflow has been successfully completed, you can output a report file.
 ```
-snakemake --report
+$ snakemake --report
 ```
 
 # License
