@@ -1,7 +1,8 @@
 rule call_variants:
     input:
         unpack(get_sample_bams_bamindex),
-        ref=config["ref"]["genome"]
+        ref=config["ref"]["genome"],
+        idx=rules.genome_faidx.output
     output:
         vcf="data/output/deepvariant/{sample}.vcf.gz",
         gvcf="data/output/deepvariant/{sample}.gvcf.gz",

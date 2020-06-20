@@ -1,7 +1,3 @@
-rule get_index:
-    input:
-
-
 if config["processing"]["trimming"]=="trimmomatic":
     rule trim_reads_se:
         input:
@@ -15,6 +11,7 @@ if config["processing"]["trimming"]=="trimmomatic":
             "logs/trimmomatic/{sample}.log"
         wrapper:
             "0.50.4/bio/trimmomatic/se"
+
 
     rule trim_reads_pe:
         input:
@@ -53,7 +50,8 @@ if config["processing"]["trimming"]=="fastp":
 
 rule map_reads:
     input:
-        reads=get_trimmed_reads
+        reads=get_trimmed_reads,
+        idx=rules.bwa_index.output
     output:
         temp("data/output/mapped/{sample}.sorted.bam")
     log:
