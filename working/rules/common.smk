@@ -32,13 +32,6 @@ def get_fai():
     return config["ref"]["genome"] + ".fai"
 
 
-# contigs in reference genome
-def get_contigs():
-    # squeeze=Trueで読み込んだデータが1列だけのデータだった場合、DataFrameではなく、Seriesを返す。
-    return pd.read_table(get_fai(),
-                         header=None, usecols=[0], squeeze=True, dtype=str)
-
-
 def get_fastq(wildcards):
     """
     Get fastq files of given sample-unit.
@@ -101,21 +94,3 @@ def get_sample_bams_bamindex(wildcards):
                   "data/output/dedup/{sample}.bam.bai",
                   sample=wildcards.sample)
                   }
-
-
-def get_recal_input(bai=False):
-    # case 1: no duplicate removal
-    f = "data/output/mapped/{sample}.sorted.bam"
-    if config["processing"]["remove-duplicates"]:
-        # case 2: remove duplicates
-        f = "data/output/dedup/{sample}.bam"
-    if bai:
-        if config["processing"].get("restrict-regions"):
-            # case 3: need an index because random access is required
-            f += ".bai"
-            return f
-        else:
-            # case 4: no index needed
-            return []
-    else:
-        return f
