@@ -10,11 +10,11 @@ tetsuro90
 * Create a new github repository using this workflow as a template.
 * Clone the newly created repository to your local system, into the place where you want to perform the data analysis.
 
-#### Step 2: Move your fastq file to `data/reads/`
+#### Step 2: Move your fastq file to `snakmake-deepvariant/working/data/reads/`
 
-#### Step 3: Move your fasta file to `data/ref/`
+#### Step 3: Move your fasta file to `snakmake-deepvariant/working/data/ref/`
 
-#### Step 4: edit `working/unit.tsv` and `working/sample.tsv`
+#### Step 4: edit `snakmake-deepvariant/working/unit.tsv` and `snakmake-deepvariant/working/sample.tsv`
 An example is shown below.  
 ```
 sample	platform	fq1	fq2
@@ -28,27 +28,20 @@ SRR1770413
 SRR341549
 ```
 
-#### Step 5: create fasta index and dict
-```
-$ cd data/ref/
-$ samtools faidx {your ref}.fa
-$ picard CreateSequenceDictionary R={your ref}.fa O={your ref}.dict
-```
-
-#### Step 6: run & enter docker container
+#### Step 5: run & enter docker container
 ```
 $ cd snakmake-deepvariant/
 $ docker-compose up&
 $ docker exec -it deepvariant /bin/bash
 ```
 
-#### Step 7: run sankemake workflow
+#### Step 6: run sankemake workflow
 ```
 cd working/
 snakemake -j {#CORE} --use-conda all
 ```
 
-#### Step 8: make a report html
+#### Step 7: make a report html
 Once the workflow has been successfully completed, you can output a report file.
 ```
 snakemake --report
