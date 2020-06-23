@@ -31,7 +31,7 @@ SRR341549
 #### Step 5: run & enter docker container
 ```
 $ cd snakmake-deepvariant/
-$ docker-compose -d
+$ docker-compose up -d
 $ docker exec -it deepvariant /bin/bash
 ```
 
