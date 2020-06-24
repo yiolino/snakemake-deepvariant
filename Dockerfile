@@ -1,13 +1,12 @@
 FROM ubuntu:18.04
 
-ENV SNAKEMAKE_VER 5.18.0
+ENV SNAKEMAKE_VER 5.19.3
 ENV PATH /opt/conda/bin:${PATH}
 ENV LANG C.UTF-8
 
 RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
-        # unzip \
         libfontconfig1 \
         rsync \
         tree \
@@ -28,5 +27,9 @@ RUN apt-get update \
     && rm -f Miniconda3-latest-Linux-x86_64.sh \
     && conda install -c conda-forge mamba \
     && mamba create -c conda-forge -c bioconda -n snakemake snakemake==${SNAKEMAKE_VER} -y \
-    && echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
+    && useradd -m -s /bin/bash deepvariant
+
+USER deepvariant
+
+RUN echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
     && echo "conda activate snakemake" >> ~/.bashrc

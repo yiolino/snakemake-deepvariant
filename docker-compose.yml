@@ -4,7 +4,7 @@ services:
     build: .
     container_name: deepvariant
     volumes:
-      - ${PWD}/working:/root/working
-    working_dir: /root/working
+      - ${PWD}/working:/home/deepvariant/working
+    working_dir: /home/deepvariant/working
     tty: true
     command: /bin/bash
