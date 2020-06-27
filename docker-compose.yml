@@ -8,3 +8,7 @@ services:
     working_dir: /home/deepvariant/working
     tty: true
     command: /bin/bash
+    cap_drop:
+      - CAP_NET_RAW
+    security_opt:
+      - no-new-privileges
