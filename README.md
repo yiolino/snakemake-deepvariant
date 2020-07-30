@@ -10,6 +10,12 @@ tetsuro90
 * Create a new github repository using this workflow as a template.
 * Clone the newly created repository to your local system, into the place where you want to perform the data analysis.
 
+```
+$ git clone https://github.com/tetsuro90/snakemake-deepvariant.git
+$ cd snakemake-deepvariant
+$ docker-compose up -d
+```
+
 #### Step 2: Move your fastq file to `snakmake-deepvariant/working/data/reads/`
 
 #### Step 3: Move your fasta file to `snakmake-deepvariant/working/data/ref/`
