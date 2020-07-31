@@ -12,8 +12,6 @@ tetsuro90
 
 ```
 $ git clone https://github.com/tetsuro90/snakemake-deepvariant.git
-$ cd snakemake-deepvariant
-$ docker-compose up -d
 ```
 
 #### Step 2: Move your fastq file to `snakmake-deepvariant/working/data/reads/`
