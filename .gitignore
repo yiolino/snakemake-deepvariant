@@ -7,3 +7,5 @@ working/logs
 working/.snakemake
 working/scripts/__pycache__
 .DS_Store
+report.html
+
