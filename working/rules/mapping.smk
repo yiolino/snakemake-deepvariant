@@ -88,3 +88,26 @@ rule samtools_index:
         protected("{prefix}.bam.bai")
     wrapper:
         "0.50.4/bio/samtools/index"
+
+
+rule RealignerTargetCreator:
+    input:
+        bam = "data/output/dedup/{sample}.bam",
+        ref = config["ref"]["genome"],
+    output:
+        target_list = protected("data/output/align/{sample}.list")
+    log:
+        "logs/gatk/align/{sample}_target.log"
+    conda:
+        "../envs/gatklite.yaml"
+
+
+rule IndelRealigner:
+    input:
+        bam = "data/output/dedup/{sample}_realign.bam",
+        bai = "data/output/dedup/{sample}_realign.bai",
+    output:
+        bam = protected("data/output/align/{sample}_align.bam"),
+        bai = protected("data/output/align/{sample}_align.bai"),
+    log:
+        "logs/gatk/align/{sample}.log"
