@@ -92,22 +92,48 @@ rule samtools_index:
 
 rule RealignerTargetCreator:
     input:
-        bam = "data/output/dedup/{sample}.bam",
+        unpack(get_sample_bams_bamindex),
         ref = config["ref"]["genome"],
+        idx=rules.genome_dict.output
     output:
-        target_list = protected("data/output/align/{sample}.list")
+        target_list = protected("data/output/realign/{sample}.list")
     log:
-        "logs/gatk/align/{sample}_target.log"
+        "logs/gatk/realign/{sample}_target.log"
+    benchmark:
+        "benchmark/gatk/realing/{sample}_target.tsv"
+    threads: 2
     conda:
         "../envs/gatklite.yaml"
+    shell:
+        "java -jar $CONDA_DEFAULT_ENV/jar/GenomeAnalysisTKLite.jar "
+        "-T RealignerTargetCreator "
+        "-nt {threads} "
+        "--validation_strictness LENIENT "
+        "-R {input.ref} "
+        "-I {input.bam} "
+        "-o {output.target_list} | tee -a {log}"
 
 
 rule IndelRealigner:
     input:
-        bam = "data/output/dedup/{sample}_realign.bam",
-        bai = "data/output/dedup/{sample}_realign.bai",
+        unpack(get_sample_bams_bamindex),
+        target_list = "data/output/realign/{sample}.list",
+        ref = config["ref"]["genome"],
     output:
-        bam = protected("data/output/align/{sample}_align.bam"),
-        bai = protected("data/output/align/{sample}_align.bai"),
+        bam = protected("data/output/realign/{sample}_align.bam"),
+        bai = protected("data/output/realign/{sample}_align.bai"),
     log:
-        "logs/gatk/align/{sample}.log"
+        "logs/gatk/realign/{sample}.log"
+    benchmark:
+        "benchmark/gatk/realing/{sample}_realign.tsv"
+    conda:
+        "../envs/gatklite.yaml"
+    shell:
+        "java -jar $CONDA_DEFAULT_ENV/jar/GenomeAnalysisTKLite.jar "
+        "-T IndelRealigner "
+        "--validation_strictness LENIENT "
+        "--read_filter NotPrimaryAlignment "
+        "-R {input.ref} "
+        "-I {input.bam} "
+        "-targetIntervals {input.target_list} "
+        "-o {output.bam} | tee -a {log}"
