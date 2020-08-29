@@ -100,7 +100,7 @@ rule RealignerTargetCreator:
     log:
         "logs/gatk/realign/{sample}_target.log"
     benchmark:
-        "benchmark/gatk/realing/{sample}_target.tsv"
+        "data/output/benchmark/gatk/realing/{sample}_target.tsv"
     threads: 2
     conda:
         "../envs/gatklite.yaml"
@@ -125,7 +125,7 @@ rule IndelRealigner:
     log:
         "logs/gatk/realign/{sample}.log"
     benchmark:
-        "benchmark/gatk/realing/{sample}_realign.tsv"
+        "data/output/benchmark/gatk/realing/{sample}_realign.tsv"
     conda:
         "../envs/gatklite.yaml"
     shell:
