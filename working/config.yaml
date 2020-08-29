@@ -23,6 +23,7 @@ params:
     mem: 
       - "-K 100000000"   # 隠れオプション defaultはthreads*10M 再現性のためにはKオプションが必要
       - "-Y"   # Use soft clipping CIGAR operation for supplementary alignments.デフォルトはprimary alignmentsにsoft clipping, supplementary alignmentsにhard clipping
+      - "-M"
   picard:
     MarkDuplicates: "REMOVE_DUPLICATES=true"
   trimmomatic:

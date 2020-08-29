@@ -1,6 +1,7 @@
 rule call_variants:
     input:
-        unpack(get_sample_bams_bamindex),
+        bam = "data/output/realign/{sample}_align.bam",
+        bai = "data/output/realign/{sample}_align.bai",
         ref=config["ref"]["genome"],
         idx=rules.genome_faidx.output
     output:
