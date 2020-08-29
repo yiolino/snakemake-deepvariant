@@ -61,6 +61,7 @@ MIT License
 * [Snakemake workflow: dna-seq-gatk-variant-calling](https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling). Copyright 2018, Johannes Köster. MIT license.
 * [fastp](https://github.com/OpenGene/fastp). Copyright 2017 OpenGene - Open Source Genetics Toolbox. MIT license.
 * [samtools](https://github.com/samtools/samtools). Copyright 2008-2019 Genome Research Ltd. The MIT/Expat License.
+* [gatk-lite](https://anaconda.org/faircloth-lab/gatk-lite). Copyright Broad Institue, Inc. MIT license.
 * [gatk4](https://github.com/broadinstitute/gatk). Copyright 2009-2020, Broad Institute, Inc. BSD-3-Clause license.
 * [bwa](https://github.com/lh3/bwa). Copyright 2009, Li H. and Durbin R. GPLv3 License.
  
