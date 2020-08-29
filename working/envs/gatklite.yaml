@@ -1,0 +1,6 @@
+channels:
+  - bioconda
+  - faircloth-lab
+dependencies:
+  - bioconda::java-jdk=7.0.91
+  - faircloth-lab::gatk-lite=2.3.0
