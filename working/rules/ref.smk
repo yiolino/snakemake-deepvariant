@@ -21,3 +21,16 @@ rule bwa_index:
         mem_mb=369000
     wrapper:
         "0.59.2/bio/bwa/index"
+
+
+rule genome_dict:
+    input:
+        config["ref"]["genome"]
+    output:
+        "data/ref/{}.dict".format(os.path.splitext(get_fasta_basename())[0]),
+    log:
+        "logs/samtools/create_dict.log"
+    conda:
+        "../envs/samtools.yaml"
+    shell:
+        "samtools dict {input} > {output} 2> {log}"
