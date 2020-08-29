@@ -1,15 +1,12 @@
-include: "rules/common.smk"
-
-##### Target rules #####
-
-rule all:
-    input:
-        "data/output/qc/multiqc.html",
-        "data/output/called/merged.vcf.gz"
-
-
 ##### Modules #####
+include: "rules/common.smk"
 include: "rules/ref.smk"
 include: "rules/mapping.smk"
 include: "rules/calling.smk"
 include: "rules/qc.smk"
+
+##### Target rules #####
+rule all:
+    input:
+        "data/output/qc/multiqc.html",
+        "data/output/called/merged.vcf.gz"
