@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-ENV SNAKEMAKE_VER 5.19.3
+ENV SNAKEMAKE_VER 5.23.0
 ENV PATH /opt/conda/bin:${PATH}
 ENV LANG C.UTF-8
 
@@ -17,6 +17,7 @@ RUN apt-get update \
         ssh \
         apt-transport-https \
         ca-certificates \
+        graphviz \
     && apt-get update \
     && apt-get install -y --no-install-recommends locales \
     && locale-gen en_US.UTF-8 \
