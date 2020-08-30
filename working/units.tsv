@@ -1,3 +1,3 @@
 sample	platform	fq1	fq2
-SRR1770413	ILLUMINA	data/reads/SRR1770413_1.fastq.gz	data/reads/SRR1770413_2.fastq.gz
-SRR341549	ILLUMINA	data/reads/SRR341549_1.fastq.gz	data/reads/SRR341549_2.fastq.gz
+SRR1770413	ILLUMINA	data/reads/SRR1770413_1.fastq	data/reads/SRR1770413_2.fastq
+SRR341549	ILLUMINA	data/reads/SRR341549_1.fastq	data/reads/SRR341549_2.fastq
