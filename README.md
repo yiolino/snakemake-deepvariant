@@ -50,7 +50,6 @@ Once the workflow has been successfully completed, you can output a report file.
 ```
 $ snakemake --report
 ```
-<p><img src="visualization.svg" /></p> 
 
 # License
 MIT License
