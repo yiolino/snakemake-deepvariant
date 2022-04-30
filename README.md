@@ -2,7 +2,7 @@
 This is sankemake-wrapper of variant calling workflow using [DeepVariant](https://github.com/google/deepvariant).  
 
 # Authors
-yiyi
+yiolino
 
 # How to use
 
